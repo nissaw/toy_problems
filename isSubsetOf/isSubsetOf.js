@@ -22,6 +22,32 @@
  * including non-strings.
 */
 
+
+// are the elements in the calling array contained in the paramter?
+  var callingArray = ['commit','push']; var paramArray = ['commit','rebase','push','blame'];
+    // callingArray.isSubsetOf(paramArray);
+      // this.length
+        // this[0] = 'commit';
+        // this[1] = 'push';
+
 Array.prototype.isSubsetOf = function(array){
-  // Your code here
+  var found = false;
+  // var set = {};
+  var set = [];
+
+  for (var i = 0; i < this.length; i++ ){
+    for (var k = 0; k < array.length; k++ ) {
+      if (this[i] === array[k]) {
+        // set[this[i]] = this[i]; // this overwrites duplicates to comparing length does not work;
+        set.push(this[i]);
+      }
+    } 
+  }
+
+  if (Object.keys(set).length === this.length) {
+    found = true;
+  }
+
+
+  return found;
 };
