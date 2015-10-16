@@ -21,32 +21,29 @@ var rockPaperScissors = function (rounds) {
   var collections = [];
   var plays = ['rock', 'paper', 'scissors'];
 
-  var 
+  var playRound = function(round, playedSoFar) {
+    if (round === rounds) {
+      collections.push(playedSoFar);
+      return;
+    }
     
-      
-      if ( this.children.length === 0 ) { // has no current children add directly to its array
-        for (var i = 0; i < plays.length; i++ ) {
-          this.children.push(makeTree(plays[i]));
-        }
-      } else { // already has children iterate through and add args to all of its children
-        for (var j = 0; j < this.children.length; j++ ) { // for each child
-            for (var k = 0; k < plays.length; k++ )
-          this.children[j].children.push(makeTree(plays[k]));  // and add them as chidren 
-          } 
-        }
-    };
+    for (var i = 0; i < plays; i++){
+      currentPlay = plays[i];
+      playRound( round+1, playedSoFar.concat(currentPlay) );
+
+    }
+  };
+
+  playRound(1, []);
+  return collections;
+};
 
 
-    for ( var i = 1 ; i < rounds; i++ ) {
-      rockTree.addRound();
 
-      })
-    }   
 
-    rockTree.addRound();
-    rockTree.addRound();
 
 //  solution 
+
 //     var rockPaperScissors = function(rounds) {
 //   rounds = rounds || 3;
 //   var outcomes = [];
@@ -57,7 +54,7 @@ var rockPaperScissors = function (rounds) {
 //     outcomes.push ( playedSoFar );
 //     return;
 //   }
-//   for (vari = 0; i < plays.length; i++){
+//   for (var i = 0; i < plays.length; i++){
 //     var currentPlay = plays[i];
 //     combos( roundsToGo - 1, playedSoFar.concat(currentPlay) );
 //   }
@@ -69,7 +66,7 @@ var rockPaperScissors = function (rounds) {
 // };
 
 
-    
+    // [[rock]]
 
 
 
