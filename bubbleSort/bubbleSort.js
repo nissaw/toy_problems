@@ -35,7 +35,31 @@ var i;
 
 // Feel free to add helper functions if needed.
 
+var lessThan = function(a, b){ // (6, 9)
+  sortedTuple = []
+  if (a < b) {
+    sortedTuple = [a, b]
+  } else {
+    sortedTuple = [b, a]
+  }
+  return sortedTuple;
+}
 
-var bubbleSort = function(array) {
-  // Your code here.
+var bubbleSort = function(array) { 
+  var sorter = function(count) {  
+    if ( count === 0 ) {
+      return;
+    }
+
+    for(i = 0; i < array.length - 1; i++) { 
+      var smaller = lessThan(array[i], array[i + 1])[0]; 
+      var bigger = lessThan(array[i], array[i + 1])[1];
+      array[i] = smaller;
+      array[i + 1] = bigger;
+    }
+    sorter(count-1);
+  }
+
+  sorter(array.length);
+  return array;
 };

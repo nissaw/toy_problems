@@ -8,26 +8,26 @@
 
 var firstNonRepeatedCharacter = function(string) {
  
- // var buildUpObj= function(string) {
+ 
   var countObj = {};
   for (var i = 0; i < string.length; i++ ) {
-    var character = string.charAt(i);
-    if (countObj.hasOwnProperty(character)) {
-      countObj[character] = 2;  // num doesn't matter only that is is not 1. this does not work countObj[character]++;
-    } else {
+    var character = string[i]; // not charAt;
+    if (!countObj[character]) {
       countObj[character] = 1;
+    } else {
+      countObj[character]++;  // num doesn't matter only that is is not 1. this does not work countObj[character]++;
     }
   }
-  // return countObj;
-// };
 
 
-  for ( var k = 0; k < string.length; k++ ) {
-    var char = string.charAt(k);
-    if ( countObj[char] = 1 ) {
+
+  for ( var i = 0; i < string.length; i++ ) {
+    var char = string[i];
+    if ( countObj[char] === 1 ) {
       return char;
     }
   }
+  return null;
 };
 
 // add ea element to an obj as element: value = 1
