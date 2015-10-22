@@ -46,7 +46,8 @@ var lessThan = function(a, b){ // (6, 9)
 }
 
 var bubbleSort = function(array) { 
-  var sorter = function(count) {  
+  var sorter = function(count) { 
+    var madeASwap = false; 
     if ( count === 0 ) {
       return;
     }
@@ -57,7 +58,12 @@ var bubbleSort = function(array) {
       array[i] = smaller;
       array[i + 1] = bigger;
     }
-    sorter(count-1);
+    // if (madeASwap) {
+    //   sorter(count-1);
+    // }
+    // if (!madeASwap) {
+    //   break;
+    // };
   }
 
   sorter(array.length);
