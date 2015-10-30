@@ -38,9 +38,52 @@ var Tree = function(value){
 
 
 Tree.prototype.BFSelect = function(filter) {
+  
+  var results = [];
+
+  var checkNode = function(node, depth){
+   
+    if (filter(node.value, depth)){
+      results.push(node.value);
+    }
+  }; 
+   
+  var checkChildren = function(node, depth){
+    for (var i = 0; i < node.children.length; i++){
+      debugger;
+      checkNode(node.children[i], depth+1);
+    }
+    for (var j = 0; j < node.children.length; j++){
+      debugger;
+      checkChildren(node.children[j], depth+1);
+    }          
+  }
+  checkNode(this, 0);
+  checkChildren(this, 0);
+
+
   // return an array of values for which the function filter(value, depth) returns true
+  return results;
 };
 
+Tree.prototype.DFSelect = function(filter) {
+
+  var resultArr = [];
+
+  var goToDepth = function(node, counter){
+
+    if (filter(node.value, counter)){
+      resultArr.push(node.value)
+    }
+
+    for (var i = 0; i < node.children.length; i++ ){
+      goToDepth(node.children[i], counter+1);
+    }
+  }
+
+  goToDepth(this, 0);
+  return resultArr;
+};
 /**
  * You shouldn't need to change anything below here, but feel free to look.
   */
@@ -94,3 +137,11 @@ Tree.prototype.removeChild = function(child){
     throw new Error("That node is not an immediate child of this tree");
   }
 };
+
+// var root1 = new Tree(1);
+// var branch2 = root1.addChild(2);
+// var branch3 = root1.addChild(3);
+// var leaf4 = branch2.addChild(4);
+// var leaf5 = branch2.addChild(5);
+// var leaf6 = branch3.addChild(6);
+// var leaf7 = branch3.addChild(7);

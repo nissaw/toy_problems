@@ -1,3 +1,5 @@
+//////NEED TO FINISH
+
 /*
  * Return an array with the power set of a given string.
  * Definition of power set: The set of all possible subsets including the empty set.
@@ -18,4 +20,20 @@
  */
 
 var powerSet = function(str){
-}
+  // n-queens
+  results =[''];
+  var sub = function(string, letterPosition){
+    currentSt = "";
+    if (letterPosition = string.length - 1){
+      results.push(string[letterPosition]);
+      return results;
+    }
+    for (var i = 0; i < string.length; i++){
+      char = string[i];
+      results.push(char);
+
+      sub(str, i)
+    }
+  }
+  sub(str, 0);
+};

@@ -7,13 +7,13 @@
   * for which the filter returns true.
   *
   * Example:
-  *   var root1 = new Tree(1);
-  *   var branch2 = root1.addChild(2);
-  *   var branch3 = root1.addChild(3);
-  *   var leaf4 = branch2.addChild(4);
-  *   var leaf5 = branch2.addChild(5);
-  *   var leaf6 = branch3.addChild(6);
-  *   var leaf7 = branch3.addChild(7);
+    var root1 = new Tree(1);
+     var branch2 = root1.addChild(2);
+     var branch3 = root1.addChild(3);
+     var leaf4 = branch2.addChild(4);
+     var leaf5 = branch2.addChild(5);
+   var leaf6 = branch3.addChild(6);
+    var leaf7 = branch3.addChild(7);
   *   root1.DFSelect(function (value, depth) {
   *     return value % 2;
   *   })
@@ -36,6 +36,22 @@ var Tree = function(value){
 };
 
 Tree.prototype.DFSelect = function(filter) {
+
+  var resultArr = [];
+
+  var goToDepth = function(node, counter){
+
+    if (filter(node.value, counter)){
+      resultArr.push(node.value)
+    }
+
+    for (var i = 0; i < node.children.length; i++ ){
+      goToDepth(node.children[i], counter+1);
+    }
+  }
+
+  goToDepth(this, 0);
+  return resultArr;
 };
 
 
