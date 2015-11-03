@@ -18,6 +18,40 @@
  * powerSet("jump")
  * -> ["", "j", "ju", "jm", "jp", "jmu", "jmp", "jpu", "jmpu", "u", "m", "p", "mu", "mp", "pu", "mpu"]
  */
+var powerSet = function(str){
+  str = str || "";
+  var letters = {};
+//remove dup letters in the string by objectifying
+for (var i = 0; i < str.length; i++){
+  letters[str[i]] = true;
+}
+// recreate a string with no duplicate letters
+str = Object.keys(letters).join('');
+
+var solutions = [];
+
+var recurse = function(idx, subset){
+  //base case: for ea letter made it to the end of the string
+  if (idx >= str.length){
+    solutions.push(subset);
+    return;
+  }
+  //recursive case
+  recurse(idx+1, subset); // don't add element
+  recurse(idx+1, subset+str[idx]); // add element
+};
+
+recurse(0, ''); 
+// this could be an IFFE if written
+// (function recurse(idx, subset){...})(0, ''); 
+
+return solutions.sort();
+
+};
+
+
+
+
 
 var powerSet = function(str){
   // n-queens

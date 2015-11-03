@@ -40,15 +40,40 @@
 
 
 var Range = function(start, end, step) {
+  if (end === undefined){
+    end = start;
+  }
+  if (start < end){
+    step = step || 1;
+  } else if (start > end){
+    step = step || -1
+  }
+ 
+  for (var i = start; i <= end; i+= step){
+    this[i] = i;
+  }
+
 };
 
 Range.prototype.size = function () {
+  Object.keys(this).length
 };
 
 Range.prototype.each = function (callback) {
+  for (var key in this){
+    callback(this[key]);
+  }
 };
 
 Range.prototype.includes = function (val) {
+  var included = false;
+  for (var key in this){
+    if (this[key] === val){
+      included = true;
+      return included;
+    }
+  }
+  return included;
 };
 
 var range = new Range(1);
