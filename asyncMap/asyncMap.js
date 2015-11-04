@@ -40,4 +40,19 @@
 
 
 var asyncMap = function(tasks, callback){
+  var results= [];
+  var taskObj = {};
+  for (var i = 0; i < tasks.length; i++){ // store the result of ea. task func as it returns;
+    taskObj[i] = tasks[i]();
+  }
+
+  return function(){ 
+    for (var i = 0; i < tasks.length; i++){
+      results.push( callback( taskObj[ i ] ) )
+    }
+
+    return results;
+
+  } // does this need to be IFFE?
+
 };
