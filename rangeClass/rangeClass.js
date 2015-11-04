@@ -40,38 +40,58 @@
 
 
 var Range = function(start, end, step) {
+  if (start === undefined){
+    return null;
+  }
+
+  this.start = start;
+
   if (end === undefined){
-    end = start;
+    this.end = start;
   }
   if (start < end){
-    step = step || 1;
+    this.step = step || 1;
   } else if (start > end){
-    step = step || -1
+    this.step = step || -1;
   }
- 
-  for (var i = start; i <= end; i+= step){
-    this[i] = i;
-  }
-
 };
 
+
 Range.prototype.size = function () {
-  Object.keys(this).length
+  if (start > end){
+    return ((this.end + 1) - this.start) / step;
+  } 
+  if (start < end){
+    return Math.abs( ((this.start + 1) - this.end / step )
+  }
 };
 
 Range.prototype.each = function (callback) {
-  for (var key in this){
-    callback(this[key]);
+  if (start > end){
+    for (var i = this.start; i <= this.end; i+= this.step){
+      callback(i);
+    }
+  } else {
+    for (var i = this.start; i >= this.end; i+= this.step)
   }
 };
 
 Range.prototype.includes = function (val) {
   var included = false;
-  for (var key in this){
-    if (this[key] === val){
-      included = true;
-      return included;
-    }
+  if (start > end){
+    for (var i = this.start; i <= this.end; i+= this.step){
+      if (i === val){
+        included = true;
+        return included;
+      }
+    };
+  } else {
+     for (var i = this.start; i >= this.end; i+= this.step){
+      if (i === val){
+        included = true;
+        return included;
+      }
+    };
   }
   return included;
 };
