@@ -29,31 +29,44 @@ var balancedParens = function(input){
   var leftBrack = 0;
   var leftArr = 0;
 
+  var toBeCalled = [];
+
   for (var i = 0 ; i < input.length; i++){
     var char = input[i];
 
+// IF A CLOSING PAREN/BRACK/ARR APPEARS BEFORE AN OPENING RETURN FALSE
+// this could be removed though
     if (leftParen < 0 || leftBrack < 0 || leftArr < 0){
       return false;
     };
-    
-    if (char === '('){
-      leftParen++
-    } else if ( char === ')'){
-      leftParen--
-    } 
 
-    if (char === '{'){
-      leftBrack++
-    } else if ( char === '}'){
-      leftBrack--
+  // if char is opening push opposite to ToBeCalled Array   
+    if (char === '('){
+      leftParen++;
+      toBeCalled.push( ')' );
+    } else if ( char === '['){
+      leftArr++;
+      toBeCalled.push( ']' );
+    } else if ( char === '{'){
+      leftBrack++;
+      toBeCalled.push( '}' );
     }
 
-    if (char === '['){
-      leftArr++
-    } else if ( char === ']'){
-      leftArr--
-    } 
-  }
+  // if char is closing must be equal to pop from ToBeCalled   
+  // and decrement count
+    if (char === ')' || char === '}' || char === ']'){
+      var pop = toBeCalled.pop();
+      if (char !== pop){
+        return false;
+      } else if ( char === ')'){
+        leftParen--;
+      } else if ( char === '}'){
+        leftBrack--;
+      } else if (char === ']'){
+        leftArr--;
+      }
+    }
+  };
 
 if (leftParen === 0 && leftBrack === 0 && leftArr === 0){
   return true;
@@ -62,5 +75,8 @@ if (leftParen === 0 && leftBrack === 0 && leftArr === 0){
 }
 
 };
+
+
+// could count just be a single number?? I think so
 
 
