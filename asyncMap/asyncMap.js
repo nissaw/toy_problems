@@ -39,6 +39,7 @@
  */
 
 
+
 var asyncMap = function(tasks, callback){
   var results= [];
   var taskObj = {};
@@ -56,3 +57,41 @@ var asyncMap = function(tasks, callback){
   } // does this need to be IFFE?
 
 };
+
+//////////////
+////////SOLUTION LECTURE//////
+//////////////
+
+var asyncMap =function(tasks, callback){
+  var results = [];
+  var resultsCount = 0;
+
+  for (var i = 0; i < tasks.lenth; i++){
+    ( function (i) {
+      tasks[i](function (val){
+        results[i] = val;
+        resultsCount++;
+        if (resultsCount === tasks.length){
+          callback(results);
+        }
+      })
+    }) (i);
+  }
+}
+
+///////another soution
+var asyncMap =function(tasks, callback){
+  var results = [];
+  var resultsCount = tasks.length;
+
+tasks.forEach(function(task, index){
+  task(function(data){
+    results[index] = data;
+    if(--resultsCount === 0){
+      callback(results);
+    }
+  });
+});
+};
+
+
