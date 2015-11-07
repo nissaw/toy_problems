@@ -40,7 +40,7 @@
  *   [3, 9, 1, 2] -> [1, 2, 3, 9]
  *
  *   3. Both halves are merged:
- *   [4, 7, 4], [3, 9, 1, 2] -> [1, 2, 3, 4, 4, 7, 9]
+ *   [4, 4, 7], [1, 2, 3, 9] -> [1, 2, 3, 4, 4, 7, 9]
  *
  *   Step 2 might seem a bit mystical - how do we sort both sides? The
  *   simple answer is that we use mergesort! After all, mergesort sorts
@@ -98,5 +98,64 @@
 
 
 var mergeSort = function(array) {
-  // Your code here.
+  // split array into indv arr
+  var sorted = [];
+  for (var i = 0; i < array.length; i++){
+    sorted.push([ array[i] ]); 
+  }
+
+// have indiv arrays need to be zipped together
+  while(sorted.length > 1){
+    var temp = [];
+    if (sorted.length % 2 !== 0){
+      temp.push(sorted.shift())
+    }
+    for (var i = 0; i < sorted.length; i+=2){
+      temp.push(zip(sorted[i], sorted[i + 1]))
+    }
+    sorted = temp.slice();
+  }
+   return sorted;  
 };
+
+
+var zip = function(arr1, arr2){       
+  var zipped = [];
+
+// check lengths
+  while (arr1.length > 0 && arr2.length > 0){
+    if (arr1[0] <= arr2[0]){
+      zipped.push(arr1.shift());
+    } else {
+      zipped.push(arr2.shift());
+    }
+  };
+
+  // if one array was longer than the other
+  if (arr1.length > 0){
+    for (var i = 0; i < arr1.length; i++){
+      zipped.push(arr1[i]);
+    }
+  } else if (arr2.length > 0){
+      for (var i = 0; i < arr2.length; i++){
+      zipped.push(arr2[i]);
+    }
+  }
+
+return zipped;
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
