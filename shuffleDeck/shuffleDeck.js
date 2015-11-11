@@ -31,8 +31,15 @@
  *   See https://www.dartmouth.edu/~chance/teaching_aids/books_articles/Mann.pdf .
  */
 
-var shuffleDeck = function(deck) {
-  // Your code here
+var shuffleDeck = function(input) {
+  var deck = input.slice();
+  var shuffledDeck = [];
+
+    while(deck.length > 0){
+      shuffledDeck.push(deck.splice(Math.floor(Math.random() * deck.length), 1)[0]);
+    }
+
+  return shuffledDeck;
 };
 
 // Ordered deck generator provided for your testing convenience
