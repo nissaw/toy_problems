@@ -59,7 +59,6 @@ var asyncMap = function(tasks, callback){
 };
 
 //////////////
-////////SOLUTION LECTURE//////
 //////////////
 
 var asyncMap =function(tasks, callback){
@@ -79,7 +78,7 @@ var asyncMap =function(tasks, callback){
   }
 }
 
-///////another soution
+/////////////
 var asyncMap =function(tasks, callback){
   var results = [];
   var resultsCount = tasks.length;
