@@ -39,58 +39,55 @@
  */
 
 
-
-var asyncMap = function(tasks, callback){
-  var results= [];
-  var taskObj = {};
-  for (var i = 0; i < tasks.length; i++){ // store the result of ea. task func as it returns;
-    taskObj[i] = tasks[i]();
-  }
-
-  return function(){ 
-    for (var i = 0; i < tasks.length; i++){
-      results.push( callback( taskObj[ i ] ) )
-    }
-
-    return results;
-
-  } // does this need to be IFFE?
-
-};
-
-//////////////
-//////////////
-
-var asyncMap =function(tasks, callback){
-  var results = [];
-  var resultsCount = 0;
-
-  for (var i = 0; i < tasks.lenth; i++){
-    ( function (i) {
-      tasks[i](function (val){
-        results[i] = val;
-        resultsCount++;
-        if (resultsCount === tasks.length){
-          callback(results);
+function asyncMap(tasks, cb){
+  const TOTAL = tasks.length;
+  let taskResults = [];
+  let completed = 0;
+// with IFFE to preserve value of i during callback
+  for (var i = 0; i < tasks.length; i++ ){
+    (function(i){
+      tasks[i](function(val){
+        // this cb is invoked only when setTimeout delay is fulfilled
+      //whatever cb is invoked with at calltime gets set in taskResults
+        taskResults[i] = val;
+        // when the final cb is invoked
+        if (++completed === TOTAL){
+          cb(taskResults);
         }
       })
-    }) (i);
+    }(i))
   }
-}
+};
 
-/////////////
-var asyncMap =function(tasks, callback){
-  var results = [];
-  var resultsCount = tasks.length;
+// with let
+var asyncMap = function(tasks, callback){
+  const TOTAL = tasks.length;
+  let taskResults = [];
+  let completed = 0;
 
-tasks.forEach(function(task, index){
-  task(function(data){
-    results[index] = data;
-    if(--resultsCount === 0){
-      callback(results);
-    }
-  });
-});
+  for (let i = 0; i < tasks.length; i++){
+    tasks[i](function(val){
+      results[i] = val;
+      if (++completed === TOTAL){
+        callback(results);
+      }
+    })
+  }
 };
 
 
+// with forEach to preseve i
+var asyncMap = function(tasks, callback){
+  const TOTAL = tasks.length;
+  let taskResults = [];
+  let completed = 0;
+
+  tasks.forEach((task, index) => {
+    task((val) => {
+      taskResults[index] = val;
+      if(++completed === TOTAL){
+        callback(taskResults);
+      }
+    });
+  });
+};
