@@ -23,60 +23,29 @@
  *
  *
  */
-var balancedParens = function(input){
+ function isBalanced (string) {
+   var toBeCalled = [];
 
-  var leftParen = 0;
-  var leftBrack = 0;
-  var leftArr = 0;
+   for (var i = 0 ; i < string.length; i++){
+     var char = string[i];
 
-  var toBeCalled = [];
+   // if char is opening push opposite to ToBeCalled Array
+     if (char === '('){
+       toBeCalled.push( ')' );
+     }
 
-  for (var i = 0 ; i < input.length; i++){
-    var char = input[i];
+   // if char is closing must be equal to pop from ToBeCalled
+     if (char === ')' ){
+       if (char !== toBeCalled.pop()){
+         return false;
+       }
+     }
+   }
 
-// IF A CLOSING PAREN/BRACK/ARR APPEARS BEFORE AN OPENING RETURN FALSE
-// this could be removed though
-    if (leftParen < 0 || leftBrack < 0 || leftArr < 0){
-      return false;
-    };
+   if (toBeCalled.length > 0) {
+     return false;
+   }
 
-  // if char is opening push opposite to ToBeCalled Array   
-    if (char === '('){
-      leftParen++;
-      toBeCalled.push( ')' );
-    } else if ( char === '['){
-      leftArr++;
-      toBeCalled.push( ']' );
-    } else if ( char === '{'){
-      leftBrack++;
-      toBeCalled.push( '}' );
-    }
+   return true; 
 
-  // if char is closing must be equal to pop from ToBeCalled   
-  // and decrement count
-    if (char === ')' || char === '}' || char === ']'){
-      var pop = toBeCalled.pop();
-      if (char !== pop){
-        return false;
-      } else if ( char === ')'){
-        leftParen--;
-      } else if ( char === '}'){
-        leftBrack--;
-      } else if (char === ']'){
-        leftArr--;
-      }
-    }
-  };
-
-if (leftParen === 0 && leftBrack === 0 && leftArr === 0){
-  return true;
-} else {
-  return false;
-}
-
-};
-
-
-// could count just be a single number?? I think so
-
-
+ };
