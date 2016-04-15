@@ -11,51 +11,36 @@
   * don't worry about handling cyclical object structures.
   *
   */
-[  ],  [ ]
-var apple = {
-  a: 1, 
-  b: {c:3}
-}
+// [  ],  [ ]
+// var apple = {
+//   a: 1,
+//   b: {c:3}
+// }
+//
+// var orange = {
+//   a: 1,
+//   b: {c:6}
+// }
 
-var orange = {
-  a: 1, 
-  b: {c:6}
-}
 
+deepEquals = function(a, b){
+// BASE CASES
+  // the one happy path for primitives ===
+  if (a === b) { return true; }
+  // both things must exist
+  if (!a || !b) { return false; }
+  // at this point if a and b aren't objects and they didn't pass === they are false
+  if (!(a instanceof Object) || !(b instanceof Object)){ return false; }
+  // they should have the same # of keys
+  if (Object.keys(a).length !== Object.keys(b).length) { return false; }
+  // if they are empty objects then true
+  if (Object.keys(a).length === 0){ return true; }
 
-var deepEquals = function(apple, orange){
-  if (apple === orange) { return true; }
-  if (!orange || !apple) { return false; }
-  if (!(apple instanceOf Object ))|| (!(orange instanceOf Object )){ return false; }
-  var appleKeys = Object.keys(apple);
-  var orangeKeys = Object.keys(orange);
-  if (appleKeys.length !== orangeKeys.length){ return false; }
-  if (appleKeys.length === 0) { return true; }
-  for (var key in apple){
-    if (!deepEquals(apple[key], orange[key])){ return false; }
+// RECURSIVE CASE
+  // we've already confirmed they have the same # of keys
+  for (var key in a) {
+    if ( !deepEquals(a[key], b[key]) ){ return false; }
   }
+  // alright all of our recursive cases returned true so ...
   return true;
 };
-
-
-//   var areEqual = true;
-
- 
-//   var subroutine = function(obj1, obj2) {
-//     keyArr1 = Object.keys(obj1); // [a, b]
-//     // keyArr2 = Object.keys(obj2);
-
-//   for (var key in obj1){
-//     if (obj2.hasOwnProperty(key) && typeof obj1[key] === 'object'){
-//       subroutine(currentKey, obj2[currentKey]) 
-//     } else if (obj2.hasOwnProperty(currentKey) && obj1[currentKey] !== obj2[currentKey]){
-//       return areEqual = false;
-//     }
-//   }
-//   subroutine(apple, orange)
-//   }
-// return areEqual;
-
-// };
-
-
