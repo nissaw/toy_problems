@@ -3,7 +3,7 @@
  * subset of an input array.  To simplify the problem, you can assume that both
  * arrays will contain only strings.
  *
- * 
+ *
  * var a = ['commit','push']
  * a.isSubsetOf(['commit','rebase','push','blame']) // true
  *
@@ -11,7 +11,7 @@
  *
  * var b = ['merge','reset','reset']
  *
- * b.isSubsetOf(['reset','merge','add','commit']) // true 
+ * b.isSubsetOf(['reset','merge','add','commit']) // true
  *
  * See http://en.wikipedia.org/wiki/Subset for more on the definition of a
  * subset.
@@ -22,32 +22,58 @@
  * including non-strings.
 */
 
-
-// are the elements in the calling array contained in the paramter?
-  var callingArray = ['commit','push']; var paramArray = ['commit','rebase','push','blame'];
-    // callingArray.isSubsetOf(paramArray);
-      // this.length
-        // this[0] = 'commit';
-        // this[1] = 'push';
-
+// disregards duplicates
 Array.prototype.isSubsetOf = function(array){
-  var found = false;
-  // var set = {};
-  var set = [];
+  let found = false;
 
-  for (var i = 0; i < this.length; i++ ){
-    for (var k = 0; k < array.length; k++ ) {
-      if (this[i] === array[k]) {
-        // set[this[i]] = this[i]; // this overwrites duplicates to comparing length does not work;
-        set.push(this[i]);
+  for(let i = 0; i < array.length; i++){
+    for(let k = 0; k < this.length; k++){
+      found = false;
+      if (array[i] === this[k]){
+        found = true;
       }
-    } 
+      if (found === false){
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+
+// cares about duplicates but because we're using an object all keys are converted to strings so 2 => '2'
+function isSubset (array, sub) {
+    let wordObj = {};
+
+  for(let i = 0; i < array.length; i++){
+    wordObj[array[i]] = wordObj[array[i]]++ || 1
   }
 
-  if (Object.keys(set).length === this.length) {
-    found = true;
+  for (let k = 0; k < sub.length; k++){
+    if(wordObj[sub[k]] > 0){
+      wordObj[sub[k]]--;
+    } else {
+      return false;
+    }
   }
 
+  return true;
+}
 
-  return found;
-};
+// deals with types without contriving a more complex key value
+function isSubset(array, sub){
+  let usedIndexes = [];
+
+  for(let i = 0; i < sub.length; i++){
+    let foundAt = array.indexOf(sub[i]);
+    if (foundAt === -1){
+      return false;
+    } else if (usedIndexes.indexOf(foundAt) !== -1){
+      return false;
+    } else {
+      usedIndexes.push(foundAt)
+    }
+  }
+
+  return true;
+}
