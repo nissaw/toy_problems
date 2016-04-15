@@ -14,7 +14,7 @@
 // if < check indexes < midpoint
 
 // if 1 element array and not a match return null or -1
-// if 2 element array and not a match need to adjust mid to look at larger element. 
+// if 2 element array and not a match need to adjust mid to look at larger element.
 var binarySearch = function (array, target){
 
   var checkMidpoint = function(low, high){
