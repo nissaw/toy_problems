@@ -1,3 +1,5 @@
+
+// Implement the function getClosestCommonAncestor and getAncestorPath in the Tree class
 var Tree = function(){
   this.children = [];
 };
