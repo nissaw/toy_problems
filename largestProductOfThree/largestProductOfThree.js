@@ -1,59 +1,71 @@
 /* Write a function that finds the largest possible product of any three numbers
  * from an array.
- * 
+ *
  * Example:
  * largestProductOfThree([2, 1, 3, 7]) === 42
  *
  * Extra credit: Make your function handle negative numbers.
  */
-
-
+// refactored
 var largestProductOfThree = function(array) {
-
-  var largest3 = [];
 
   array.sort(function(a, b){
     return a - b;
-  })
-// this part could be skipped by directly returning n  = array.length
-//    array[n-1] * array[n -2] * array [n - 3];
-  while (largest3.length < 3){
-    largest3.push(array.pop());
-  };
-
-  return _.reduce(largest3, function(acc, current) {
-    return acc * current;
   });
 
-};
-// if neg numbers are included - Math.max(product of last 3, product of largest and two smallest)
-
-   // find the three largest numbers // this reduce function not looking at the first index
-  // var returnLargestIndex = function(array) { 
-  //   var largestIndex =  
-  //     _.reduce(array, function(acc, current, i) {
-  //       if ( acc  > current )
-  //         return i;
-  //       else {
-  //         return i; 
-  //       }
-  //    });
-  //   largest3.push(array[largestIndex]);
-  //   array.splice(largestIndex, 1);
-  //   return largestIndex;
-  // };
-
-
-  // while (largest3.length < 4) {
-  //   console.log(largest3);
-  //   returnLargestIndex(array);
-  // };
-
-  // return _.reduce(largest3, function(acc, current) {
-  //   return acc * current;
-  // });
-
+  return Math.max(
+    getProduct(array.slice(-3)),
+    getProduct([ array[array.length-1], array[0], array[1] ])
+  );
+  
 };
 
 
 
+// brute force
+var largestProductOfThree = function(array) {
+  let negatives = [];
+  let positives = [];
+
+  array.sort(function(a, b){
+    return Math.abs(a) - Math.abs(b);
+  })
+  console.log(array);
+
+  for (let i = 0; i < array.length; i++){
+    array[i] > 0 ? positives.push(array[i]) : negatives.push(array[i])
+  }
+
+  console.log(negatives, positives)
+
+ let negCount = negatives.length;
+ let posCount = positives.length;
+ let largestPos = positives[posCount-1];
+
+ // if there is are any positive numbers
+  if (posCount > 0){
+  //if there are also at least 2 negative numbers and at least 3 pos numbers
+    if (negCount > 1 && posCount > 2){
+      // compare neg product against pos product
+     let negProduct = getProduct(negatives.slice(-2)) * largestPos;
+     let posProduct = getProduct(positives.slice(-3,-1)) * largestPos;
+     return getLargest(negProduct, posProduct);
+   } else {
+     // smallest 3 nums overall
+     return getLargest(getProduct(array.slice(0,3)), getProduct(array.slice(-3)));
+   }
+  } else {
+    // smallest 3 negative numbers
+    return getProduct(negatives.slice(0,3))
+  }
+
+};
+
+// helpers
+function getLargest(a,b){
+  return a > b ? a : b
+}
+
+function getProduct(arr){
+  return arr.reduce((product, num) => product*num)
+};
