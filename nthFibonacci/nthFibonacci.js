@@ -20,33 +20,53 @@
  *
  */
 
-var nthFibonacci = function (n) { // 4
+// classic recursion
+const nthFibo = function(n){
+  if (n === 0){
+    return 0;
+  }
+  if (n < 3){
+    return 1;
+  }
+  return nthFibo(n-1) + nthFibo(n-2);
+}
+
+// one version
+var nthFibonacci = function(n){
+ var fibo = [0, 1];
+ var count = 2;
+
+ while ( count <= n ){
+   fibo[count] = fibo[count-1] + fibo[count-2];
+   count++;
+ }
+ return fibo[n];
+};
+
+
+// another version
+var nthFibonacci = function (n) {
   var lower = 0;
   var higher = 1;
   var x;
 
   var fiboArr = [0, 1];
 
-  var findNth = function(currentPos) { 
+  var findNth = function(currentPos) {
     if ( currentPos === n + 1 ) { // this is n + 1 bc if you stop at n you haven't yet placed the nth value into fibArr
       return;
     }
     else {
-      x = lower + higher; 
+      x = lower + higher;
       lower = higher;
-      higher = x; 
-   
-      fiboArr.push(higher); 
+      higher = x;
+
+      fiboArr.push(higher);
       findNth(currentPos+1);
     }
   };
 
-findNth(2); // any way to generate the first two digits?
+findNth(2);
 return fiboArr[ n ];
 
 };
-
-
-
-
-
