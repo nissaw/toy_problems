@@ -94,14 +94,45 @@
  *   Implement natural splitting into your mergesort. How much does it improve your average-case runtime?
  *
  */
+//////////////
+// recursive
+//////////////
+function mergeSort(arr){
+
+  if (arr.length < 2){
+    return arr;
+  }
+
+  let left = arr.slice(0, Math.floor(arr.length/2));
+  let right = arr.slice(Math.floor(arr.length/2));
+  return zip(mergeSort(left), mergeSort(right));
+}
+
+// helper zip func
+function zip(arr1, arr2){
+  var zipped = [];
+
+  while(arr1.length && arr2.length){
+    if (arr1[0] < arr2[0]){
+      zipped.push(arr1.shift())
+    } else {
+      zipped.push(arr2.shift())
+    }
+  }
+
+  return zipped.concat(arr1, arr2)
+}
 
 
 
+//////////////
+// iterative
+//////////////
 var mergeSort = function(array) {
   // split array into indv arr
   var sorted = [];
   for (var i = 0; i < array.length; i++){
-    sorted.push([ array[i] ]); 
+    sorted.push([ array[i] ]);
   }
 
 // have indiv arrays need to be zipped together
@@ -115,14 +146,17 @@ var mergeSort = function(array) {
     }
     sorted = temp.slice();
   }
-   return sorted;  
+   return sorted;
 };
 
 
-var zip = function(arr1, arr2){       
+
+
+// helper
+function zip(arr1, arr2){
   var zipped = [];
 
-// check lengths
+  // check lengths
   while (arr1.length > 0 && arr2.length > 0){
     if (arr1[0] <= arr2[0]){
       zipped.push(arr1.shift());
@@ -137,25 +171,11 @@ var zip = function(arr1, arr2){
       zipped.push(arr1[i]);
     }
   } else if (arr2.length > 0){
-      for (var i = 0; i < arr2.length; i++){
+    for (var i = 0; i < arr2.length; i++){
       zipped.push(arr2[i]);
     }
   }
 
-return zipped;
+  return zipped;
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
