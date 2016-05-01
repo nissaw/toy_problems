@@ -6,33 +6,19 @@
  *   firstNonRepeatedCharacter('AACBDB'); // => 'C'
  */
 
-var firstNonRepeatedCharacter = function(string) {
- 
- 
-  var countObj = {};
-  for (var i = 0; i < string.length; i++ ) {
-    var character = string[i]; // not charAt;
-    if (!countObj[character]) {
-      countObj[character] = 1;
-    } else {
-      countObj[character]++;  // num doesn't matter only that is is not 1. this does not work countObj[character]++;
-    }
+
+function firstNonRepeatedCharacter (str) {
+  var countObject = {};
+
+  for(var i = 0; i < str.length; i++){
+    let letter = str[i];
+    countObject[letter] = ++countObject[letter] || 1;
   }
 
-
-
-  for ( var i = 0; i < string.length; i++ ) {
-    var char = string[i];
-    if ( countObj[char] === 1 ) {
-      return char;
+  for(var i = 0 ; i < str.length; i++){
+    if (countObject[str[i]] === 1){
+      return str[i];
     }
   }
-  return null;
+  return 'sorry';
 };
-
-// add ea element to an obj as element: value = 1
-// if find it again increment value
-// if 
-// split or charAt if it already exists skip othe
-  // TODO: your solution here
-
