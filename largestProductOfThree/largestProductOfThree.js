@@ -17,7 +17,7 @@ var largestProductOfThree = function(array) {
     getProduct(array.slice(-3)),
     getProduct([ array[array.length-1], array[0], array[1] ])
   );
-  
+
 };
 
 
@@ -30,13 +30,10 @@ var largestProductOfThree = function(array) {
   array.sort(function(a, b){
     return Math.abs(a) - Math.abs(b);
   })
-  console.log(array);
 
   for (let i = 0; i < array.length; i++){
     array[i] > 0 ? positives.push(array[i]) : negatives.push(array[i])
   }
-
-  console.log(negatives, positives)
 
  let negCount = negatives.length;
  let posCount = positives.length;
