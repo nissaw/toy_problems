@@ -12,6 +12,33 @@
  * inputs well.
  */
 
+// v2
+ function longestRun (string) {
+   let maxStart = 0;
+   let maxEnd = 0;
+   let maxRun = 0;
+
+   let currentStart = 0;
+   let currentRun = 0;
+
+   for (let i = 0; i < string.length; i++){
+     if(string[i] === string[i+1]){
+       currentRun++;
+       if (currentRun > maxRun){
+         maxRun = currentRun;
+         maxStart = currentStart;
+         maxEnd = i+1;
+       }
+     } else {
+       currentRun = 0;
+       currentStart = i+1;
+     }
+   }
+   return [maxStart, maxEnd];
+ }
+
+
+// v1
 var longestRun = function (string) {
   var longestSoFar = 0;
   var count = 0;
@@ -20,13 +47,13 @@ var longestRun = function (string) {
   for (var i = 0 ; i < string.length - 1; i++){
     char = string[i];
     next = string[i + 1];
- 
+
     if (char === next){
       count++;
       if (count > longestSoFar){
         longestSoFar = count;
         endIndex = i + 1;
-      }   
+      }
     } else {
       count = 0;
     }
